@@ -1,6 +1,4 @@
-﻿THERM_*.csv
-__pycache__/
-*.pyc
+﻿*.pyc
 mcp/
 epaisseur/
 convection/
