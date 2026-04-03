@@ -1,0 +1,9 @@
+﻿THERM_*.csv
+__pycache__/
+*.pyc
+mcp/
+epaisseur/
+convection/
+dt0/
+graphs/
+data/raw/

@@ -1,0 +1,239 @@
+/* ═══════════════════════════════════════════════════════════
+   style.css — Simulations thermiques MCP
+   Palette : blanc / gris clair / bleu foncé
+═══════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:    #1e40af;
+  --blue-lt: #3b82f6;
+  --bg:      #f8fafc;
+  --white:   #ffffff;
+  --border:  #e2e8f0;
+  --text:    #1e293b;
+  --muted:   #64748b;
+  --a:       #2563eb;
+  --b:       #dc2626;
+  --c:       #16a34a;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.7;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+header {
+  background: var(--blue);
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.subtitle  { font-size: 1rem; opacity: .85; }
+
+/* ── Nav ─────────────────────────────────────────────────── */
+nav {
+  background: #1e3a8a;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+nav a {
+  color: #bfdbfe;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background .2s;
+}
+nav a:hover { background: rgba(255,255,255,.15); color: #fff; }
+
+/* ── Sections ────────────────────────────────────────────── */
+section {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+section h2 {
+  font-size: 1.4rem;
+  color: var(--blue);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+section h3 {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin: 24px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+section p { margin-bottom: 14px; }
+
+code {
+  display: inline-block;
+  background: #f1f5f9;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  margin: 10px 0 16px;
+  word-break: break-all;
+}
+
+/* ── Info cards ──────────────────────────────────────────── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+.info-card {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.info-number { font-size: 2rem; font-weight: 700; color: var(--blue); }
+.info-label  { font-size: 13px; color: var(--muted); }
+
+/* ── Classement cards ────────────────────────────────────── */
+.classement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.classement-card {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+}
+.classement-card h3 { font-size: 1rem; margin-bottom: 6px; color: var(--blue); }
+.classement-card p  { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.classement-card ul { padding-left: 18px; font-size: 13px; }
+.classement-card li { margin-bottom: 4px; font-family: 'Courier New', monospace; }
+
+/* ── Badges ──────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.badge-a { background: var(--a); }
+.badge-b { background: var(--b); }
+.badge-c { background: var(--c); }
+
+.case-desc {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+/* ── Tables ──────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+thead th {
+  background: var(--blue);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+tbody tr:last-child td { border-bottom: none; }
+
+/* ── Graphiques ──────────────────────────────────────────── */
+.graph-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+.graph-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.graph-badge {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+.graph-badge.badge-a { background: var(--a); }
+.graph-badge.badge-b { background: var(--b); }
+.graph-badge.badge-c { background: var(--c); }
+.graph-card img {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid var(--border);
+}
+.graph-caption {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.4rem; }
+  section   { padding: 20px 14px; margin: 20px 10px; }
+  nav a     { padding: 5px 10px; font-size: 13px; }
+  .graph-grid, .classement-grid, .info-grid { grid-template-columns: 1fr; }
+}

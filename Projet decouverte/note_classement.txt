@@ -1,0 +1,50 @@
+NOTE DE CLASSEMENT — THERM_*.csv
+=================================
+Auteur : Elias Lallouet
+Date   : Mars 2026
+
+STRUCTURE DES NOMS DE FICHIERS
+-------------------------------
+Format : THERM_<MCP>_ep<épaisseur>mm_hx<convection>_dT0<condition>.csv
+
+Exemples :
+  THERM_RT2_ep15mm_hx10_dT02.csv
+    → MCP = RT2, épaisseur = 15 mm, convection hx = 1 W/m²K, dT0 = +2°C
+  THERM_Hydrate_0C_ep30mm_hx20_dT04.csv
+    → MCP = Hydrate_0C, épaisseur = 30 mm, convection hx = 2 W/m²K, dT0 = +4°C
+
+CORRESPONDANCES DES CODES
+--------------------------
+Convection (hx) :
+  hx5  → h = 0.5 W/m²K (faible)
+  hx10 → h = 1.0 W/m²K (standard)
+  hx20 → h = 2.0 W/m²K (fort)
+
+Condition initiale (dT0) :
+  dT04  → T_initiale = +4°C
+  dT02  → T_initiale = +2°C
+  dT00  → T_initiale =  0°C
+  dT0-2 → T_initiale = -2°C
+
+ARBORESCENCES CRÉÉES
+--------------------
+mcp/          → 5 dossiers (36 fichiers chacun)
+epaisseur/    → 3 dossiers (60 fichiers chacun)
+convection/   → 3 dossiers (60 fichiers chacun)
+dt0/          → 4 dossiers (45 fichiers chacun)
+graphs/       → 36 graphiques PNG organisés par ep/hx/dT0
+data/raw/     → CSV d'origine (non modifiés)
+data/processed/ → 3 cas sélectionnés pour la page web
+
+SÉLECTION POUR LA PAGE WEB
+---------------------------
+A) Cas standard  : ep=15mm, hx=1, dT0=+2
+B) Cas extrême   : ep=10mm, hx=0.5, dT0=-2
+C) Cas optimal   : ep=30mm, hx=2, dT0=+4
+
+COMPATIBILITÉ FUTURES SIMULATIONS
+----------------------------------
+Les tableaux HTML sont construits sur les colonnes garanties :
+  t(s), Tsurface(°C), Flux(W), E(J), f_liq
+Toute colonne supplémentaire dans de futurs CSV sera ignorée
+sans casser l'affichage de la page web.

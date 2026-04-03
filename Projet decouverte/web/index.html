@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulations thermiques MCP — Projet découverte</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════ HEADER -->
+  <header>
+    <div class="header-inner">
+      <h1>Simulations thermiques MCP</h1>
+      <p class="subtitle">Matériaux à changement de phase — Analyse comparative</p>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════ NAV -->
+  <nav>
+    <a href="#intro">Introduction</a>
+    <a href="#methode">Classement</a>
+    <a href="#donnees">Données</a>
+    <a href="#graphiques">Graphiques</a>
+    <a href="#conclusion">Conclusion</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════ INTRO -->
+  <section id="intro">
+    <h2>Introduction</h2>
+    <p>
+      Ce projet présente les résultats de simulations thermiques réalisées sur cinq matériaux à changement de phase (MCP) :
+      <strong>RT2, RT2HC, RT2_EG, Eutectic_0C</strong> et <strong>Hydrate_0C</strong>.
+      Chaque simulation modélise le comportement thermique d'une couche de MCP soumise à une température extérieure variable,
+      en faisant varier l'épaisseur de la couche, le coefficient de convection et la condition initiale de température.
+    </p>
+    <p>
+      Au total, 180 fichiers CSV ont été classés selon quatre critères : le type de MCP, l'épaisseur, la convection et la condition initiale.
+      Trois cas représentatifs sont présentés sur cette page.
+      L'interface est conçue pour rester lisible si de nouvelles colonnes apparaissent dans de futurs fichiers CSV —
+      seules les colonnes garanties sont affichées.
+    </p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="info-number">180</span>
+        <span class="info-label">Fichiers CSV</span>
+      </div>
+      <div class="info-card">
+        <span class="info-number">5</span>
+        <span class="info-label">MCP différents</span>
+      </div>
+      <div class="info-card">
+        <span class="info-number">36</span>
+        <span class="info-label">Graphiques générés</span>
+      </div>
+      <div class="info-card">
+        <span class="info-number">3</span>
+        <span class="info-label">Cas présentés</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ CLASSEMENT -->
+  <section id="methode">
+    <h2>Méthode de classement</h2>
+    <p>Les 180 fichiers suivent la structure de nommage :</p>
+    <code>THERM_&lt;MCP&gt;_ep&lt;épaisseur&gt;mm_hx&lt;convection&gt;_dT0&lt;condition&gt;.csv</code>
+
+    <div class="classement-grid">
+      <div class="classement-card">
+        <h3>📁 Par MCP</h3>
+        <p>5 dossiers — 36 fichiers chacun</p>
+        <ul>
+          <li>mcp/RT2/</li>
+          <li>mcp/RT2HC/</li>
+          <li>mcp/RT2_EG/</li>
+          <li>mcp/Eutectic0C/</li>
+          <li>mcp/Hydrate0C/</li>
+        </ul>
+      </div>
+      <div class="classement-card">
+        <h3>📐 Par épaisseur</h3>
+        <p>3 dossiers — 60 fichiers chacun</p>
+        <ul>
+          <li>epaisseur/10mm/</li>
+          <li>epaisseur/15mm/</li>
+          <li>epaisseur/30mm/</li>
+        </ul>
+      </div>
+      <div class="classement-card">
+        <h3>🌊 Par convection</h3>
+        <p>3 dossiers — 60 fichiers chacun</p>
+        <ul>
+          <li>convection/hx05/ (0,5 W/m²K)</li>
+          <li>convection/hx1/ (1 W/m²K)</li>
+          <li>convection/hx2/ (2 W/m²K)</li>
+        </ul>
+      </div>
+      <div class="classement-card">
+        <h3>🌡 Par condition initiale</h3>
+        <p>4 dossiers — 45 fichiers chacun</p>
+        <ul>
+          <li>dt0/dT0+4/</li>
+          <li>dt0/dT0+2/</li>
+          <li>dt0/dT0_0/</li>
+          <li>dt0/dT0-2/</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ DONNÉES -->
+  <section id="donnees">
+    <h2>Données — Trois cas sélectionnés</h2>
+    <p>Les tableaux ci-dessous présentent l'évolution des grandeurs principales à des instants clés (0h, 6h, 12h, 24h, 48h, 96h).
+       MCP affiché : <strong>Eutectic_0C</strong>.</p>
+
+    <!-- CAS A -->
+    <h3>
+      <span class="badge badge-a">A</span>
+      Cas standard — ep=10 mm, hx=0.5, dT0=+2°C
+    </h3>
+    <p class="case-desc">Configuration de référence. La fraction liquide diminue progressivement — le MCP se solidifie en restituant de l'énergie.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Temps (h)</th>
+            <th>T surface (°C)</th>
+            <th>Flux (W)</th>
+            <th>Énergie (J)</th>
+            <th>Fraction liquide</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0,0</td><td>2,000</td><td>14,40</td><td>0</td><td>1,000</td></tr>
+          <tr><td>6,0</td><td>0,198</td><td>4,07</td><td>219 377</td><td>0,698</td></tr>
+          <tr><td>12,0</td><td>0,236</td><td>−1,83</td><td>224 408</td><td>0,736</td></tr>
+          <tr><td>24,0</td><td>−0,147</td><td>9,25</td><td>361 315</td><td>0,353</td></tr>
+          <tr><td>48,0</td><td>−1,682</td><td>5,56</td><td>579 761</td><td>0,000</td></tr>
+          <tr><td>96,0</td><td>−2,259</td><td>4,18</td><td>602 206</td><td>0,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CAS B -->
+    <h3>
+      <span class="badge badge-b">B</span>
+      Cas extrême — ep=10 mm, hx=0.5, dT0=−2°C
+    </h3>
+    <p class="case-desc">Condition initiale la plus froide. Le MCP ne fond jamais — la fraction liquide reste à 0 dès le départ. L'énergie cumulée est négative car le matériau absorbe de l'énergie sans la restituer.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Temps (h)</th>
+            <th>T surface (°C)</th>
+            <th>Flux (W)</th>
+            <th>Énergie (J)</th>
+            <th>Fraction liquide</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0,0</td><td>−2,000</td><td>4,80</td><td>0</td><td>0,000</td></tr>
+          <tr><td>6,0</td><td>−2,447</td><td>−2,27</td><td>29 125</td><td>0,000</td></tr>
+          <tr><td>12,0</td><td>−0,672</td><td>−4,01</td><td>−40 190</td><td>0,000</td></tr>
+          <tr><td>24,0</td><td>−2,253</td><td>4,19</td><td>−1 249</td><td>0,000</td></tr>
+          <tr><td>48,0</td><td>−2,259</td><td>4,18</td><td>−5 050</td><td>0,000</td></tr>
+          <tr><td>96,0</td><td>−2,259</td><td>4,18</td><td>−13 305</td><td>0,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CAS C -->
+    <h3>
+      <span class="badge badge-c">C</span>
+      Cas optimal — ep=10 mm, hx=0.5, dT0=+4°C
+    </h3>
+    <p class="case-desc">Condition initiale la plus chaude. La fraction liquide reste élevée plus longtemps et l'énergie restituée est maximale parmi les trois cas — c'est le scénario le plus favorable pour le stockage thermique.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Temps (h)</th>
+            <th>T surface (°C)</th>
+            <th>Flux (W)</th>
+            <th>Énergie (J)</th>
+            <th>Fraction liquide</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0,0</td><td>4,000</td><td>19,20</td><td>0</td><td>1,000</td></tr>
+          <tr><td>6,0</td><td>0,336</td><td>4,41</td><td>253 850</td><td>0,836</td></tr>
+          <tr><td>12,0</td><td>0,366</td><td>−1,52</td><td>264 447</td><td>0,866</td></tr>
+          <tr><td>24,0</td><td>−0,043</td><td>9,50</td><td>413 444</td><td>0,457</td></tr>
+          <tr><td>48,0</td><td>−1,268</td><td>6,56</td><td>655 906</td><td>0,000</td></tr>
+          <tr><td>96,0</td><td>−2,253</td><td>4,19</td><td>701 504</td><td>0,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ GRAPHIQUES -->
+  <section id="graphiques">
+    <h2>Graphiques comparatifs</h2>
+    <p>Chaque graphique compare les 5 MCP pour une même combinaison de paramètres.
+       Les 33 autres graphiques se trouvent dans le dossier <code>graphs/</code>.</p>
+
+    <div class="graph-grid">
+
+      <div class="graph-card">
+        <div class="graph-badge badge-a">A — Cas standard</div>
+        <img src="../graphs/ep15mm/hx10/dT0+2/graph_ep15mm_hx10_dT02.png" alt="T_surface cas standard ep15mm hx1 dT0+2">
+        <p class="graph-caption">
+          <strong>ep=15 mm, hx=1, dT0=+2°C</strong><br>
+          Configuration de référence. Les 5 MCP convergent progressivement
+          vers une température négative après solidification complète.
+        </p>
+      </div>
+
+      <div class="graph-card">
+        <div class="graph-badge badge-b">B — Cas extrême</div>
+        <img src="../graphs/ep10mm/hx5/dT0-2/graph_ep10mm_hx5_dT0-2.png" alt="T_surface cas extrême ep10mm hx0.5 dT0-2">
+        <p class="graph-caption">
+          <strong>ep=10 mm, hx=0,5, dT0=−2°C</strong><br>
+          Condition initiale la plus froide, épaisseur et convection minimales.
+          Aucun changement de phase — le MCP reste entièrement solide.
+        </p>
+      </div>
+
+      <div class="graph-card">
+        <div class="graph-badge badge-c">C — Cas optimal</div>
+        <img src="../graphs/ep30mm/hx20/dT0+4/graph_ep30mm_hx20_dT04.png" alt="T_surface cas optimal ep30mm hx2 dT0+4">
+        <p class="graph-caption">
+          <strong>ep=30 mm, hx=2, dT0=+4°C</strong><br>
+          Épaisseur maximale, convection forte, température initiale la plus haute.
+          Meilleure capacité de stockage thermique parmi toutes les combinaisons.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ CONCLUSION -->
+  <section id="conclusion">
+    <h2>Conclusion</h2>
+    <p>
+      Les simulations montrent que le comportement thermique des MCP varie significativement selon la condition initiale de température.
+      Dans le cas extrême (dT0=−2°C), aucun changement de phase ne se produit et l'énergie restituée est quasi nulle.
+      Dans le cas optimal (dT0=+4°C), le MCP Hydrate_0C se distingue par une capacité de stockage nettement supérieure aux autres matériaux.
+    </p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ FOOTER -->
+  <footer>
+    <p>Elias Lallouet — Bachelier en Informatique de Gestion — IPGP 2025–2026</p>
+  </footer>
+
+</body>
+</html>
