@@ -382,19 +382,22 @@
 </div>
 
 <script>
-// ── Base simulation data (computed from Python FEM) ────────────────────
+// ── Données de référence issues du calcul Python FEM ───────────────────
+// BASE_B : déplacements ballast (µm), BASE_C : béton — 33 points en surface
 const BASE_B = [-76.43,-76.65,-77.32,-78.48,-80.17,-82.49,-85.57,-89.62,-94.92,-102.15,-112.13,-132.63,-142.22,-148.66,-152.73,-155.03,-155.77,-155.03,-152.73,-148.66,-142.22,-132.63,-112.13,-102.15,-94.92,-89.62,-85.57,-82.49,-80.17,-78.48,-77.32,-76.65,-76.43];
 const BASE_C = [-175.02,-175.02,-175.02,-175.03,-175.04,-175.05,-175.07,-175.09,-175.11,-175.15,-175.20,-175.31,-175.36,-175.39,-175.41,-175.42,-175.43,-175.42,-175.41,-175.39,-175.36,-175.31,-175.20,-175.15,-175.11,-175.09,-175.07,-175.05,-175.04,-175.03,-175.02,-175.02,-175.02];
 const XS = Array.from({length:33},(_,i)=>+(i*2.5).toFixed(1));
 
-// ── State ──────────────────────────────────────────────────────────────
-let params = {eb:150,ec:30000,p:300,dt:40,ab:1.2,ac:1.0};
-let currentData = computeData(params);
-let history = [];
-let activeRun = null;
+// ── État global de l'application ─────────────────────────────────────────
+let params = {eb:150, ec:30000, p:300, dt:40, ab:1.2, ac:1.0}; // valeurs par défaut des sliders
+let currentData = computeData(params); // données affichées actuellement
+let history = []; // liste des simulations lancées (max 20)
+let activeRun = null; // simulation de l'historique en cours de visualisation
 let runId = 1;
 let chartMain=null, chartDiff=null, chartHist=null;
 
+// Mise à l'échelle approximative des données de base selon les paramètres
+// (utilisé en fallback si l'API Flask n'est pas disponible)
 function computeData(p){
   return XS.map((x,i)=>({
     x,
@@ -405,7 +408,7 @@ function computeData(p){
 
 function getDisplayData(){ return activeRun ? activeRun.data : currentData; }
 
-// ── Params ─────────────────────────────────────────────────────────────
+// ── Mise à jour des sliders — redessine le maillage en temps réel ────────
 function updateParam(key,val,unit){
   params[key] = parseFloat(val);
   const map = {eb:'lbl-eb',ec:'lbl-ec',p:'lbl-p',dt:'lbl-dt',ab:'lbl-ab',ac:'lbl-ac'};
@@ -417,7 +420,7 @@ function updateParam(key,val,unit){
   updateStats(preview);
 }
 
-// ── Run simulation ──────────────────────────────────────────────────────
+// ── Lance le calcul FEM via l'API Flask (avec fallback statique) ──────────
 function runSim(){
   const btn = document.getElementById('btn-run');
   const pw = document.getElementById('progress-wrap');
@@ -444,7 +447,7 @@ function runSim(){
   }, i*220));
 }
 
-// ── Stats ───────────────────────────────────────────────────────────────
+// ── Mise à jour du panneau de statistiques ──────────────────────────────
 function updateStats(data){
   const maxB = Math.abs(Math.min(...data.map(d=>d.b)));
   const maxC = Math.abs(Math.min(...data.map(d=>d.c)));
@@ -453,7 +456,8 @@ function updateStats(data){
   document.getElementById('st-r').textContent = (maxB/maxC).toFixed(3);
 }
 
-// ── Mesh canvas ─────────────────────────────────────────────────────────
+// ── Dessin du maillage Q4 sur le Canvas 2D ──────────────────────────────
+// Palette jet : bleu (peu déformé) → rouge (très déformé), échelle fixe 0-200µm
 function drawMesh(data){
   const canvas = document.getElementById('meshCanvas');
   const ctx = canvas.getContext('2d');
@@ -536,7 +540,7 @@ function drawMesh(data){
   ctx.fillText('0.35m',2,PAD.t+ch); ctx.fillText('0',PAD.l-12,PAD.t+9);
 }
 
-// ── Charts ──────────────────────────────────────────────────────────────
+// ── Graphiques Chart.js — courbes ballast et béton ─────────────────────
 const cOpts = {
   responsive:true, animation:{duration:400},
   plugins:{legend:{labels:{color:'#94a3b8',font:{family:'Courier New',size:11}}},
@@ -571,7 +575,7 @@ function updateCharts(data){
   }
 }
 
-// ── Table ───────────────────────────────────────────────────────────────
+// ── Tableau des déplacements nodaux ────────────────────────────────────
 function updateTable(data){
   const tb = document.getElementById('tableBody');
   tb.innerHTML = data.filter((_,i)=>i%4===0).map(d=>`
@@ -584,7 +588,7 @@ function updateTable(data){
     </tr>`).join('');
 }
 
-// ── Export CSV ──────────────────────────────────────────────────────────
+// ── Export CSV côté client via l'API Blob (pas de serveur nécessaire) ───
 function exportCSV(){
   const d = getDisplayData();
   const rows = ['x_cm,uy_ballast_microm,uy_beton_microm', ...d.map(r=>`${r.x},${r.b},${r.c}`)];
@@ -593,7 +597,7 @@ function exportCSV(){
   a.download = `fem_p${params.p}_dT${params.dt}.csv`; a.click();
 }
 
-// ── History ─────────────────────────────────────────────────────────────
+// ── Historique des simulations (stocké en mémoire, max 20 entrées) ──────
 function renderHistory(){
   const el = document.getElementById('hist-list');
   const title = document.getElementById('hist-title');
@@ -646,7 +650,7 @@ function clearActiveRun(){
   document.getElementById('active-banner').style.display='none';
 }
 
-// ── Tab navigation ──────────────────────────────────────────────────────
+// ── Navigation entre les onglets ───────────────────────────────────────
 function showTab(name, btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -658,7 +662,7 @@ function showTab(name, btn){
   if(name==='therm' && !pcmInited){ initPCMCharts(); pcmInited=true; }
 }
 
-// ── BI-RAIL DATA & CHARTS ───────────────────────────────────────────────
+// ── Onglet Bi-rail : simulation de deux rails côte à côte ─────────────
 const GAUGE_REF = 1.435;
 const L_SEAT = 0.43;
 const LX_BI = GAUGE_REF + 0.40;
@@ -752,7 +756,7 @@ function updateBirail(){
   }
 }
 
-// ── SUPERPOSITION ────────────────────────────────────────────────────────
+// ── Onglet Superposition : compare plusieurs courbes sur un même graphique
 const SUP_VISIBLE = {ballast:true,beton:true,birail:true,temp:true,flux:true,energy:true,frac:true};
 let chartSup = null;
 
