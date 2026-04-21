@@ -16,9 +16,9 @@ matplotlib.use('Agg')  # pas d'affichage graphique (mode serveur)
 import matplotlib.pyplot as plt
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# MAILLAGE
-# ══════════════════════════════════════════════════════════════════════════════
+# ---------------------------  4 classes principales : Mesh, LinearElastic, CrushableCap, FEMSolver
+# MAILLAGE  --  crée une grille de 32 colonnes et 14 rangées d'éléments, ce qui donne 448 éléments Q4, 495 nœuds, et 990 degrés de liberté. Un degré de liberté c'est une inconnue dans le système
+# ---------------------------
 
 @dataclass
 class Mesh:
@@ -59,9 +59,9 @@ class Mesh:
         return self.nodes, self.conn, self.bnds
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+# ---------------------------
 # FONCTIONS FEM DE BASE
-# ══════════════════════════════════════════════════════════════════════════════
+# ---------------------------
 
 def gauss_points():
     """Points et poids d'intégration de Gauss 2×2."""
@@ -95,9 +95,10 @@ def B_matrix(dN_dx):
     return B
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# LOIS DE COMPORTEMENT
-# ══════════════════════════════════════════════════════════════════════════════
+# ---------------------------
+# LOIS DE COMPORTEMENT  LinearElastic — la loi de Hooke pour le béton. La relation est simple : contrainte égale matrice d'élasticité multipliée par déformation. Le béton reprend toujours
+#  sa forme initiale après déchargement, c'est un comportement réversible.
+# ---------------------------
 
 class LinearElastic:
     """Élasticité linéaire de Hooke en déformation plane (béton)."""
@@ -121,7 +122,9 @@ class LinearElastic:
         return self.D() @ (deps - np.array([1,1,0]) * alpha * delta_T)
 
 
-class CrushableCap:
+class CrushableCap:  #  la loi élasto-plastique pour le ballast granulaire. Elle combine une surface de charge elliptique en (p, q) avec un écrouissage isotrope. Les paramètres permettent de modéliser la rigidité initiale,
+    # la pression de pré-confinement, la forme de la surface de charge, et la dégradation progressive du matériau avec la plasticité. Le retour plastique est effectué par une projection itérative sur l'ellipse de charge,
+    #  ce qui permet de simuler le comportement non linéaire du ballast sous les charges ferroviaires.
     """
     Loi élasto-plastique crushable-cap pour le ballast granulaire.
     Surface de charge elliptique en (p, q) avec écrouissage isotrope.
@@ -213,9 +216,10 @@ class CrushableCap:
         return sig, D_upd, state_upd
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# SOLVEUR FEM
-# ══════════════════════════════════════════════════════════════════════════════
+# ---------------------------
+# SOLVEUR FEM assemble le système global et le résout.  Il gère les conditions aux limites, les chargements, et la mise à jour des états plastiques pour le ballast. La méthode run() effectue une résolution
+#  incrémentale en appliquant progressivement la charge de service, et retourne les déplacements en surface pour les deux matériaux, ce qui permet de comparer leur comportement sous les mêmes conditions de chargement et de température.
+# ---------------------------
 
 class FEMSolver:
     """Assemblage, application des CL et résolution du système K·U = F."""
@@ -338,9 +342,9 @@ class FEMSolver:
         return U, self.nodes[top_nodes, 1], self.nodes[top_nodes, 0], top_nodes
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+# ---------------------------
 # SCRIPT PRINCIPAL
-# ══════════════════════════════════════════════════════════════════════════════
+# ---------------------------
 
 if __name__ == '__main__':
     # Paramètres de référence
