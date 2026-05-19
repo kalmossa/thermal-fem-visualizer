@@ -119,6 +119,58 @@
     padding:3px 10px;cursor:pointer;font-size:11px;font-family:inherit;
     transition:opacity .2s;}
   .pcm-btn:hover{opacity:.8;}
+
+  /* ── Fascicules — catalogue documentation Infrabel ── */
+  .fas-hero{background:var(--bg3);border:1px solid rgba(59,130,246,.15);border-radius:12px;
+    padding:24px;margin-bottom:18px}
+  .fas-hero h2{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--blue2);
+    font-weight:700;margin-bottom:6px}
+  .fas-hero .fas-sub{font-size:11px;color:var(--sub);line-height:1.6;margin-bottom:16px}
+  .fas-search-wrap{display:flex;gap:8px;align-items:center;background:var(--bg2);
+    border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:8px 14px;transition:border-color .2s}
+  .fas-search-wrap:focus-within{border-color:var(--blue)}
+  .fas-search-wrap svg{flex-shrink:0;opacity:.5}
+  .fas-search-wrap input{flex:1;background:transparent;border:none;outline:none;color:var(--text);
+    font-family:inherit;font-size:12px;padding:4px 0}
+  .fas-search-wrap input::placeholder{color:var(--muted)}
+  .fas-meta{display:flex;justify-content:space-between;margin-top:10px;font-size:10px;color:var(--muted)}
+
+  .fas-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+  .fas-filter{padding:5px 12px;background:transparent;border:1px solid rgba(59,130,246,.18);
+    color:var(--sub);border-radius:6px;font-size:10px;letter-spacing:1px;text-transform:uppercase;
+    font-family:inherit;cursor:pointer;transition:all .15s}
+  .fas-filter:hover{border-color:rgba(59,130,246,.5);color:var(--text)}
+  .fas-filter.active{background:rgba(59,130,246,.15);border-color:var(--blue);color:var(--blue2)}
+  .fas-filter .count{margin-left:6px;opacity:.6;font-size:9px}
+
+  .fas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+  .fas-card{background:var(--bg3);border:1px solid rgba(59,130,246,.15);border-radius:10px;
+    padding:16px;display:flex;flex-direction:column;gap:8px;transition:all .2s;position:relative}
+  .fas-card:hover{border-color:rgba(59,130,246,.4);transform:translateY(-1px)}
+  .fas-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .fas-tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;
+    border-radius:4px;font-weight:600;flex-shrink:0}
+  .tag-voie{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+  .tag-signalisation{background:rgba(96,165,250,.12);color:var(--blue2);border:1px solid rgba(96,165,250,.3)}
+  .tag-catenaire{background:rgba(167,139,250,.12);color:var(--purple);border:1px solid rgba(167,139,250,.3)}
+  .tag-securite{background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.3)}
+  .tag-ouvrages{background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.3)}
+  .tag-impetrants{background:rgba(251,146,60,.12);color:#fb923c;border:1px solid rgba(251,146,60,.3)}
+  .tag-reglementation{background:rgba(148,163,184,.12);color:#94a3b8;border:1px solid rgba(148,163,184,.3)}
+  .tag-opendata{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.3)}
+  .fas-ref{font-size:10px;color:var(--muted);letter-spacing:1px;font-family:'DM Mono',monospace}
+  .fas-title{font-size:13px;color:var(--text);font-weight:600;line-height:1.4}
+  .fas-desc{font-size:11px;color:var(--sub);line-height:1.55;flex:1}
+  .fas-foot{display:flex;justify-content:space-between;align-items:center;
+    padding-top:8px;border-top:1px solid rgba(59,130,246,.1);margin-top:4px}
+  .fas-year{font-size:10px;color:var(--muted)}
+  .fas-link{font-size:10px;color:var(--blue2);text-decoration:none;letter-spacing:1px;
+    text-transform:uppercase;font-weight:600;padding:4px 8px;border:1px solid rgba(59,130,246,.25);
+    border-radius:5px;transition:all .15s}
+  .fas-link:hover{background:rgba(59,130,246,.1);border-color:var(--blue)}
+
+  .fas-empty{text-align:center;padding:50px 20px;color:var(--muted);font-size:12px}
+  .fas-empty strong{color:var(--text);display:block;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -134,6 +186,7 @@
     <button class="tab" id="tab-birail" onclick="showTab('birail',this)">🛤 Bi-rail</button>
     <button class="tab" id="tab-superpose" onclick="showTab('superpose',this)">📈 Superposition</button>
     <button class="tab" id="tab-therm" onclick="showTab('therm',this)">🌡 Thermique PCM</button>
+    <button class="tab" id="tab-fascicules" onclick="showTab('fascicules',this)">📚 Fascicules</button>
     <button class="tab" id="tab-history" onclick="showTab('history',this)">🕐 Historique</button>
   </div>
 </div>
@@ -332,6 +385,38 @@
         <canvas id="birailCompChart" height="90"></canvas>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ── FASCICULES — catalogue documentation Infrabel ── -->
+<div id="panel-fascicules" class="panel fadein">
+  <div class="fas-hero">
+    <h2>📚 Réglementation et fascicules Infrabel</h2>
+    <p class="fas-sub">
+      Centralisation des fascicules techniques, procédures de sécurité, règlements généraux d'exploitation
+      et jeux de données ouverts du gestionnaire de l'infrastructure ferroviaire belge.
+      Tous les documents référencés ici sont accessibles en open data depuis le portail public d'Infrabel.
+      Inspiré du fonctionnement de la plateforme AMDM Web (Asset Management Data Manager).
+    </p>
+    <div class="fas-search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="search" id="fas-search" placeholder="Rechercher par référence, titre ou mot-clé (ballast, caténaire, signalisation…)" oninput="renderFascicules()">
+    </div>
+    <div class="fas-meta">
+      <span id="fas-meta-count">— documents disponibles</span>
+      <span>Source : <a href="https://infrabel.be" target="_blank" rel="noopener" style="color:var(--blue2);text-decoration:none">infrabel.be</a> · <a href="https://opendata.infrabel.be" target="_blank" rel="noopener" style="color:var(--blue2);text-decoration:none">opendata.infrabel.be</a></span>
+    </div>
+  </div>
+
+  <div class="fas-filters" id="fas-filters"></div>
+
+  <div class="fas-grid" id="fas-grid"></div>
+
+  <div class="fas-empty" id="fas-empty" style="display:none">
+    <strong>Aucun document trouvé.</strong>
+    Essaie un autre mot-clé ou réinitialise le filtre en cliquant sur « Tous ».
   </div>
 </div>
 
@@ -660,6 +745,184 @@ function showTab(name, btn){
   if(name==='birail') initBirailCharts();
   if(name==='superpose') renderSuperpose();
   if(name==='therm' && !pcmInited){ initPCMCharts(); pcmInited=true; }
+  if(name==='fascicules' && !fascInited){ initFascicules(); fascInited=true; }
+}
+
+// ── Onglet Fascicules : catalogue de documents Infrabel en open data ──────
+// Documents recensés via recherche web sur "Infrabel fascicule pdf" — tous publics
+const FASCICULES = [
+  // Voie ferrée — travaux de voie
+  {ref:'Fascicule 32', cat:'voie', year:'2007',
+   title:"Travaux de voie",
+   desc:"Prescriptions techniques pour les entreprises chargées des travaux de voie. Inclut signalisation, dispositifs de détection des rails et installation.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/Fascicule-32.pdf'},
+  {ref:'Fascicule 32 V2', cat:'voie', year:'2014',
+   title:"Travaux de voie — version 2",
+   desc:"Révision des prescriptions techniques pour les travaux de voie. Cahier des charges applicable aux entreprises sous-traitantes.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/Fascicule%2032%20V2.pdf'},
+  {ref:'Fascicule 52', cat:'voie', year:'2005',
+   title:"Direction Infrastructure — Travaux de voie",
+   desc:"Trois parties : prescriptions techniques, plans types et catalogue d'items. Applicable aux marchés de travaux de la division Infrastructure.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/Fascicule%2052.pdf'},
+
+  // Caténaire
+  {ref:'RGE 712', cat:'catenaire', year:'2014',
+   title:"Caténaire — types et comparaison",
+   desc:"Règlement général d'exploitation sur les caténaires. Description des différents types 3 kV CC et comparaison technique.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/RGE-712.pdf'},
+
+  // Signalisation
+  {ref:'I-AM.204', cat:'signalisation', year:'2018',
+   title:"EMC RS — Compatibilité électromagnétique",
+   desc:"Spécification de compatibilité électromagnétique pour le matériel roulant. Compatibilité caténaire et lignes de signalisation.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/si_xrosto-yz_emc_rs_2.4_f.pdf'},
+
+  // Sécurité & santé
+  {ref:'RGE 310', cat:'securite', year:'2024',
+   title:"Desserte et conduite des engins moteurs",
+   desc:"Règlement général d'exploitation sur la conduite des engins moteurs sur les voies temporairement fermées à la circulation normale. Version 2024 (Avis 4 I-CBE).",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/2024.06.09_RGE%20310_Avis%204%20I-CBE%202024_PUB_FR%20(ABi_Signed%202024-06-05)_signed.pdf'},
+  {ref:'RGE 310', cat:'securite', year:'2018',
+   title:"Conduite des engins moteurs (version antérieure)",
+   desc:"Édition Avis 21 I-TMS/2018 du règlement sur la desserte et la conduite des engins moteurs. Référence historique.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/rge-310.pdf'},
+  {ref:'Fascicule 63 v2.1', cat:'securite', year:'2020',
+   title:"Mesures de sécurité et de santé",
+   desc:"Mesures de sécurité et de santé lors de l'exécution des travaux sur le domaine ferroviaire. Version 2.1 mise à jour.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/FASCICULE_63_Version%202.1.pdf'},
+  {ref:'Fascicule 63 v2.0', cat:'securite', year:'2017',
+   title:"Sécurité — édition 2017",
+   desc:"Édition antérieure du fascicule 63 sur les mesures de sécurité et de santé en exécution de travaux.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/01.10.2017_fascicule_63_v2.0_fr_0.pdf'},
+  {ref:'Module sécurité', cat:'securite', year:'2022',
+   title:"Travailler en sécurité sur et le long des voies",
+   desc:"Module d'introduction à la sécurité destiné aux entrepreneurs intervenant sur le domaine ferroviaire.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/Module%20d%27introduction%20a%CC%80%20la%20se%CC%81curite%CC%81%20pour%20entrepreneurs.pdf'},
+
+  // Ouvrages d'art
+  {ref:'Fascicule 33 (337)', cat:'ouvrages', year:'1982',
+   title:"Ouvrages d'art — travaux de parachèvement",
+   desc:"Chapitre 337 : parements, couvre-murs, revêtements, menuiserie métallique, drainage, étanchéité, peintures et protection.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/Hoofdstuk-337%20FR%20Travaux%20de%20parachevement%20et%20travaux%20divers.pdf'},
+  {ref:'CE-34.9', cat:'ouvrages', year:'2020',
+   title:"Travaux de réfection et d'entretien des ouvrages",
+   desc:"Publication via l'avis 41 I-AM/2020. Prescriptions pour les marchés de réfection et entretien des ouvrages d'art.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/Bundel-CE%2034_9%20FR%20Travaux%20de%20r%C3%A9fection%20et%20d%27entretien%20des%20ouvrages_0.pdf'},
+  {ref:'CE RTV-KW1', cat:'ouvrages', year:'2022',
+   title:"Construction d'ouvrages d'art",
+   desc:"Cahier des charges pour la construction d'ouvrages d'art ferroviaires. Direction Infrastructure, division I-1.53.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/CE%20RTV-KW1%20FR%20Construction_1.pdf'},
+
+  // Impétrants et domaine
+  {ref:'Fascicule 35.1', cat:'impetrants', year:'2018',
+   title:"Gestion des impétrants sur le domaine",
+   desc:"Procédure pour la gestion des impétrants sur le domaine ferroviaire et sous les voies. Conditions de mise hors tension caténaire.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/fascicule_35-1_-_gestion_des_impetrants_sur_le_domaine_et_sous_les_voies_0.pdf'},
+  {ref:'Fascicule 35', cat:'impetrants', year:'2024',
+   title:"Fascicule 35 — édition 2024",
+   desc:"Version 2024 du fascicule sur la gestion des impétrants. Mises à jour réglementaires récentes.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/2024%20Fascicule%2035.pdf'},
+
+  // Réglementation et référence
+  {ref:'DRR 2021', cat:'reglementation', year:'2021',
+   title:"Document de référence du réseau",
+   desc:"Document de référence du réseau (DRR) valable du 13/12/2020 au 11/12/2021. Conditions d'accès et de tarification.",
+   url:'https://infrabel.be/sites/default/files/generated/files/paragraph/DRR%202021_20210325.pdf'},
+  {ref:'RAS 2021', cat:'reglementation', year:'2021',
+   title:"Rapport annuel de sécurité 2021",
+   desc:"Synthèse annuelle des indicateurs de sécurité, des incidents recensés et des actions correctives sur l'infrastructure.",
+   url:'https://infrabel.be/sites/default/files/generated/files/report/Rapport%20annuel%20de%20se%CC%81curite%CC%81%202021%20FR.pdf'},
+  {ref:'RAS 2020', cat:'reglementation', year:'2020',
+   title:"Rapport annuel de sécurité 2020",
+   desc:"Rapport annuel de sécurité de l'exercice 2020. ISCPA — indicateurs, accidents et améliorations.",
+   url:'https://infrabel.be/sites/default/files/generated/files/report/RAS%202020%20FR_ISCPA.pdf'},
+  {ref:'RGDG 06', cat:'reglementation', year:'2017',
+   title:"Règlement général — Partie IV, Titre I",
+   desc:"Règlement général de la direction générale, partie IV, titre I, chapitre I. Cadre normatif applicable aux opérations.",
+   url:'https://infrabel.be/sites/default/files/wysiwyg-files/rgdg06_partie_iv_titre_i_chapitre_i.pdf'},
+
+  // Open data — jeux de données géographiques
+  {ref:'Portail Open Data', cat:'opendata', year:'',
+   title:"Plateforme open data Infrabel",
+   desc:"Point d'entrée principal du portail public — jeux de données sur le réseau ferroviaire belge, tableaux de bord et API.",
+   url:'https://opendata.infrabel.be/pages/home/'},
+  {ref:'Lijnsecties', cat:'opendata', year:'',
+   title:"Sections de lignes ferroviaires",
+   desc:"Découpage du réseau selon les caractéristiques d'infrastructure : tracé, caractéristiques techniques par tronçon, exportable en CSV/GeoJSON.",
+   url:'https://opendata.infrabel.be/explore/dataset/lijnsecties/export/'},
+  {ref:'Kunstwerken', cat:'opendata', year:'',
+   title:"Ouvrages d'art (≥ 2 m d'ouverture)",
+   desc:"Inventaire géoréférencé des ouvrages d'art ferroviaires d'ouverture supérieure ou égale à 2 mètres : ponts, tunnels, viaducs.",
+   url:'https://opendata.infrabel.be/explore/dataset/kunstwerken/'},
+];
+
+const FAS_CATS = [
+  {key:'all',            label:'Tous'},
+  {key:'voie',           label:'Voie ferrée'},
+  {key:'signalisation',  label:'Signalisation'},
+  {key:'catenaire',      label:'Caténaire'},
+  {key:'securite',       label:'Sécurité'},
+  {key:'ouvrages',       label:"Ouvrages d'art"},
+  {key:'impetrants',     label:'Impétrants'},
+  {key:'reglementation', label:'Réglementation'},
+  {key:'opendata',       label:'Open Data'},
+];
+
+const FAS_CAT_LABELS = Object.fromEntries(FAS_CATS.map(c=>[c.key, c.label]));
+let fascInited = false;
+let fasActiveCat = 'all';
+
+function initFascicules(){
+  // Construction des chips de filtre avec compteur par catégorie
+  const container = document.getElementById('fas-filters');
+  container.innerHTML = FAS_CATS.map(c=>{
+    const n = c.key==='all' ? FASCICULES.length : FASCICULES.filter(d=>d.cat===c.key).length;
+    return `<button class="fas-filter${c.key===fasActiveCat?' active':''}" data-cat="${c.key}" onclick="setFasFilter('${c.key}')">${c.label}<span class="count">${n}</span></button>`;
+  }).join('');
+  renderFascicules();
+}
+
+function setFasFilter(cat){
+  fasActiveCat = cat;
+  document.querySelectorAll('#fas-filters .fas-filter').forEach(b=>{
+    b.classList.toggle('active', b.dataset.cat===cat);
+  });
+  renderFascicules();
+}
+
+function renderFascicules(){
+  const q = (document.getElementById('fas-search').value || '').toLowerCase().trim();
+  const filtered = FASCICULES.filter(d=>{
+    if(fasActiveCat!=='all' && d.cat!==fasActiveCat) return false;
+    if(!q) return true;
+    const hay = (d.ref+' '+d.title+' '+d.desc+' '+FAS_CAT_LABELS[d.cat]).toLowerCase();
+    return hay.includes(q);
+  });
+  const grid = document.getElementById('fas-grid');
+  const empty = document.getElementById('fas-empty');
+  const meta  = document.getElementById('fas-meta-count');
+  meta.textContent = `${filtered.length} document${filtered.length>1?'s':''} sur ${FASCICULES.length} référencé${FASCICULES.length>1?'s':''}`;
+  if(filtered.length===0){
+    grid.innerHTML=''; empty.style.display='block'; return;
+  }
+  empty.style.display='none';
+  grid.innerHTML = filtered.map(d=>`
+    <div class="fas-card">
+      <div class="fas-card-head">
+        <span class="fas-ref">${escapeHtml(d.ref)}</span>
+        <span class="fas-tag tag-${d.cat}">${FAS_CAT_LABELS[d.cat]}</span>
+      </div>
+      <div class="fas-title">${escapeHtml(d.title)}</div>
+      <div class="fas-desc">${escapeHtml(d.desc)}</div>
+      <div class="fas-foot">
+        <span class="fas-year">${d.year || 'En vigueur'}</span>
+        <a class="fas-link" href="${d.url}" target="_blank" rel="noopener">Consulter le PDF ↗</a>
+      </div>
+    </div>`).join('');
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 // ── Onglet Bi-rail : simulation de deux rails côte à côte ─────────────
