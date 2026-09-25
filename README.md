@@ -6,6 +6,9 @@
 
 **Thermo-mechanical finite element simulation for railway track beds — in the browser.**
 
+**[Live demo →](https://thermal-fem-visualizer.onrender.com)** (free hosting: the instance
+sleeps after 15 min of inactivity, first load can take ~30-60s to wake up)
+
 A Python solver computes nodal displacements under combined mechanical and thermal
 loading. A Flask REST API exposes it. A single-page HTML5 interface drives it live and
 renders the mesh, the stress and plastic-state fields, the surface profiles and the run
