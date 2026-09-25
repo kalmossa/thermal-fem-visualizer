@@ -1,0 +1,14 @@
+# Déploiement Render. Le plan gratuit met l'instance en veille après 15 minutes
+# d'inactivité : le premier accès paie alors un démarrage à froid d'environ une
+# minute, ce qui est pénalisant pour un lien qu'on ouvre une seule fois.
+services:
+  - type: web
+    name: thermal-fem-visualizer
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: FEM_ALLOWED_ORIGIN
+        sync: false          # à renseigner avec l'origine du front
+      - key: FEM_RATE_LIMIT
+        value: "20"

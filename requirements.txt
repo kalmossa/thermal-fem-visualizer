@@ -1,0 +1,12 @@
+# Solveur et API
+flask>=3.0
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+
+# Serveur WSGI de production (voir README, section Déploiement)
+waitress>=3.0 ; platform_system == "Windows"
+gunicorn>=21.2 ; platform_system != "Windows"
+
+# Tests
+pytest>=8.0

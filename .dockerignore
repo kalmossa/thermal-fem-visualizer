@@ -1,0 +1,12 @@
+.git
+.github
+__pycache__
+*.pyc
+.pytest_cache
+.venv
+venv
+
+# 27 Mo de simulations PCM : sans usage pour le service web
+pcm-thermal/
+docs/
+*.pdf

@@ -28,20 +28,23 @@ Condition initiale (dT0) :
 
 ARBORESCENCES CRÉÉES
 --------------------
-mcp/            → 5 dossiers (36 fichiers chacun)
-epaisseur/      → 3 dossiers (60 fichiers chacun)
-convection/     → 3 dossiers (60 fichiers chacun)
-dt0/            → 4 dossiers (45 fichiers chacun)
-graphs/         → 36 graphiques PNG organisés par ep/hx/dT0
+mcp/          → 5 dossiers (36 fichiers chacun)
+epaisseur/    → 3 dossiers (60 fichiers chacun)
+convection/   → 3 dossiers (60 fichiers chacun)
+dt0/          → 4 dossiers (45 fichiers chacun)
+graphs/       → 36 graphiques PNG organisés par ep/hx/dT0
+data/raw/     → CSV d'origine (non modifiés)
 data/processed/ → 3 cas sélectionnés pour la page web
 
 SÉLECTION POUR LA PAGE WEB
 ---------------------------
-A) Cas standard : ep=15mm, hx=1, dT0=+2
-B) Cas extrême  : ep=10mm, hx=0.5, dT0=-2
-C) Cas optimal  : ep=30mm, hx=2, dT0=+4
+A) Cas standard  : ep=15mm, hx=1, dT0=+2
+B) Cas extrême   : ep=10mm, hx=0.5, dT0=-2
+C) Cas optimal   : ep=30mm, hx=2, dT0=+4
 
 COMPATIBILITÉ FUTURES SIMULATIONS
 ----------------------------------
-Seules les colonnes garanties sont utilisées : t(s), Tsurface(°C), Flux(W), E(J), f_liq
-Toute colonne supplémentaire dans de futurs CSV est ignorée automatiquement.
+Les tableaux HTML sont construits sur les colonnes garanties :
+  t(s), Tsurface(°C), Flux(W), E(J), f_liq
+Toute colonne supplémentaire dans de futurs CSV sera ignorée
+sans casser l'affichage de la page web.

@@ -1,0 +1,6 @@
+# Normalise les fins de ligne : évite des diffs entiers quand le dépôt passe
+# d'un poste Windows à un runner Linux.
+* text=auto eol=lf
+
+*.png binary
+*.pdf binary

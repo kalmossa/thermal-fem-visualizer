@@ -1,8 +1,28 @@
-﻿*.pyc
+# Python
 __pycache__/
-mcp/
-epaisseur/
-convection/
-dt0/
-graphs/
-.env
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Arborescences de classement régénérées par pcm-thermal/organiser.py
+# (liens physiques vers les CSV sources : inutile de les versionner)
+pcm-thermal/mcp/
+pcm-thermal/epaisseur/
+pcm-thermal/convection/
+pcm-thermal/dt0/
+pcm-thermal/graphs/
+
+# Artefacts intermédiaires
+_offline.json
+
+# Configuration d'outillage local
+.claude/
+
+# Systèmes
+.DS_Store
+Thumbs.db
+
+# Artefact temporaire de l' extraction des chaines a traduire
+_i18n_fr.json
